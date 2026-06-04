@@ -59,3 +59,127 @@
 
 .navbar-links a:hover { color: #fff; }
 .navbar-links a:hover::after { width: 100%; }
+
+/* Lab dropdown */
+.navbar-dropdown {
+  position: relative;
+}
+
+/* trigger inherits .navbar-links a styles — only caret extras needed */
+.navbar-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.navbar-caret {
+  font-size: 0.7rem;
+  transition: transform 0.2s;
+}
+
+.navbar-dropdown.open .navbar-caret {
+  transform: rotate(180deg);
+}
+
+.navbar-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: 0;
+  min-width: 150px;
+  background: rgba(7, 5, 20, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 10px;
+  padding: 0.4rem;
+  list-style: none;
+  margin: 0;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.navbar-dropdown.open .navbar-dropdown-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.navbar-dropdown-menu li a {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.navbar-dropdown-menu li a::after { display: none; }
+
+.navbar-dropdown-menu li a:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: #fff;
+}
+
+/* Connect Four flyout sub-menu */
+.navbar-has-submenu {
+  position: relative;
+}
+
+.navbar-has-submenu > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar-sub-caret {
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.5;
+  margin-left: 0.3rem;
+}
+
+.navbar-submenu {
+  position: absolute;
+  right: 100%;
+  top: 0;
+  margin-right: 0.35rem;
+  min-width: 120px;
+  list-style: none;
+  margin-top: 0;
+  padding: 0.4rem;
+  background: rgba(7, 5, 20, 0.95);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 10px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.navbar-has-submenu.open .navbar-submenu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(0);
+}
+
+.navbar-submenu li a {
+  display: block;
+  padding: 0.5rem 0.85rem;
+  border-radius: 7px;
+  color: var(--text-muted);
+  font-size: 0.87rem;
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+}
+
+.navbar-submenu li a::after { display: none; }
+
+.navbar-submenu li a:hover {
+  background: rgba(99, 102, 241, 0.15);
+  color: #fff;
+}

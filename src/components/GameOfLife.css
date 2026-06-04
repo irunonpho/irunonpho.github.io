@@ -6,6 +6,41 @@
   text-align: center;
 }
 
+.lab-tabs {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  padding: 4px;
+  background: rgba(99, 102, 241, 0.06);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  width: fit-content;
+  margin: 0 auto 2rem;
+}
+
+.lab-tab {
+  padding: 0.45rem 1.4rem;
+  border-radius: 9px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lab-tab.active {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(99, 102, 241, 0.4);
+}
+
+.lab-tab:not(.active):hover {
+  color: var(--accent);
+  background: rgba(99, 102, 241, 0.1);
+}
+
 .gol-description {
   color: var(--text-muted);
   font-size: 1.05rem;
