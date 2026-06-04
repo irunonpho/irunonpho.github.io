@@ -3,6 +3,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
 import Portfolio from "./components/Portfolio";
+import GameOfLife from "./components/GameOfLife";
 import Contact from "./components/Contact";
 import "./App.css";
 
@@ -15,6 +16,7 @@ export default function App() {
         <Hero />
         <About />
         <Portfolio />
+        <GameOfLife />
         <Contact />
       </main>
     </div>
