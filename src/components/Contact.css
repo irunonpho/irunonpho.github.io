@@ -84,13 +84,20 @@
 }
 
 .contact-form-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: row;
   gap: 1.2rem;
 }
 
+.contact-form-row .contact-field {
+  flex: 1;
+  min-width: 0;
+}
+
 @media (max-width: 540px) {
-  .contact-form-row { grid-template-columns: 1fr; }
+  .contact-form-row {
+    flex-direction: column;
+  }
 }
 
 .contact-field {

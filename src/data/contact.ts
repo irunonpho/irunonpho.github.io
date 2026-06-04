@@ -17,6 +17,6 @@ export const contact = {
   ],
   about:
     "I'm a passionate developer who loves building elegant solutions to complex problems. " +
-    "When I'm not shipping code I'm exploring new technologies, contributing to open source, " +
+    "When I'm not shipping code I'm exploring new technologies, playing my guitar, " +
     "or drinking way too much Red Bull.",
 };
