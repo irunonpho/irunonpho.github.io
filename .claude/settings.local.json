@@ -3,7 +3,10 @@
     "allow": [
       "Bash(npm run *)",
       "PowerShell(git -C c:\\\\workspace\\\\personal-website remote -v)",
-      "Bash(npx playwright *)"
+      "Bash(npx playwright *)",
+      "Bash(node -e ' *)",
+      "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
+      "PowerShell(Stop-Process -Force)"
     ]
   }
 }
