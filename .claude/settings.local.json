@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "PowerShell(git -C c:\\\\workspace\\\\personal-website remote -v)"
+      "PowerShell(git -C c:\\\\workspace\\\\personal-website remote -v)",
+      "Bash(npx playwright *)"
     ]
   }
 }
