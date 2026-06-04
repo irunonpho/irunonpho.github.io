@@ -87,6 +87,11 @@ export default function Navbar() {
                 </li>
               </ul>
             </li>
+
+            {/* Snake — plain item */}
+            <li>
+              <a href="#lab-snake" onClick={e => navToLab(e, "lab-snake")}>Snake</a>
+            </li>
           </ul>
         </li>
 

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import ConnectFour from "./ConnectFour";
+import Snake from "./Snake";
 import "./GameOfLife.css";
 
 const ROWS = 20;
@@ -31,9 +32,9 @@ function nextGen(grid: Grid): Grid {
 }
 
 export default function GameOfLife() {
-  const [activeGame, setActiveGame] = useState<"gol" | "c4">(() =>
-    window.location.hash === "#lab-c4" ? "c4"
-    : window.location.hash === "#lab-gol" ? "gol"
+  const [activeGame, setActiveGame] = useState<"gol" | "c4" | "snake">(() =>
+    window.location.hash === "#lab-c4"    ? "c4"
+    : window.location.hash === "#lab-snake" ? "snake"
     : "gol"
   );
   const [grid, setGrid] = useState<Grid>(makeEmpty);
@@ -47,11 +48,11 @@ export default function GameOfLife() {
   useEffect(() => {
     const onHash = () => {
       if (window.location.hash === "#lab-c4") {
-        setActiveGame("c4");
-        setRunning(false);
+        setActiveGame("c4"); setRunning(false);
       } else if (window.location.hash === "#lab-gol") {
-        setActiveGame("gol");
-        setRunning(false);
+        setActiveGame("gol"); setRunning(false);
+      } else if (window.location.hash === "#lab-snake") {
+        setActiveGame("snake"); setRunning(false);
       }
       // plain #lab just scrolls — no tab change
     };
@@ -98,9 +99,16 @@ export default function GameOfLife() {
           >
             Connect Four
           </button>
+          <button
+            className={`lab-tab${activeGame === "snake" ? " active" : ""}`}
+            onClick={() => { setActiveGame("snake"); setRunning(false); }}
+          >
+            Snake
+          </button>
         </div>
 
-        {activeGame === "c4" ? <ConnectFour /> : <>
+        {activeGame === "c4"    ? <ConnectFour /> :
+         activeGame === "snake" ? <Snake /> : <>
         <p className="gol-description">
           Click any cell to toggle it, then hit Play to watch the colony evolve.
         </p>
