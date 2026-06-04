@@ -1,6 +1,10 @@
 import type { ReactElement } from "react";
+import { useState } from "react";
 import { contact } from "../data/contact";
 import "./Contact.css";
+
+// Sign up at https://formspree.io and replace with your form ID
+const FORMSPREE_ID = "meewoqpd";
 
 const icons: Record<string, ReactElement> = {
   github: (
@@ -21,6 +25,27 @@ const icons: Record<string, ReactElement> = {
 };
 
 export default function Contact() {
+  const [fields, setFields] = useState({ name: "", email: "", message: "" });
+  const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
+    setFields((f) => ({ ...f, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("sending");
+    try {
+      const res = await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(fields),
+      });
+      setStatus(res.ok ? "sent" : "error");
+    } catch {
+      setStatus("error");
+    }
+  };
+
   return (
     <section id="contact" className="contact section">
       <div className="section-inner contact-inner">
@@ -50,6 +75,59 @@ export default function Contact() {
             </a>
           ))}
         </div>
+
+        {status === "sent" ? (
+          <div className="contact-form-success">
+            <p>Thanks for reaching out — I'll get back to you soon!</p>
+          </div>
+        ) : (
+          <form className="contact-form" onSubmit={handleSubmit} noValidate>
+            <div className="contact-form-row">
+              <div className="contact-field">
+                <label htmlFor="cf-name">Name</label>
+                <input
+                  id="cf-name"
+                  name="name"
+                  type="text"
+                  placeholder="Your name"
+                  required
+                  value={fields.name}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="contact-field">
+                <label htmlFor="cf-email">Email</label>
+                <input
+                  id="cf-email"
+                  name="email"
+                  type="email"
+                  placeholder="you@example.com"
+                  required
+                  value={fields.email}
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className="contact-field">
+              <label htmlFor="cf-message">Message</label>
+              <textarea
+                id="cf-message"
+                name="message"
+                rows={5}
+                placeholder="Tell me about your project or opportunity..."
+                required
+                value={fields.message}
+                onChange={handleChange}
+              />
+            </div>
+            {status === "error" && (
+              <p className="contact-form-error">Something went wrong — please try again.</p>
+            )}
+            <button type="submit" className="btn-primary contact-submit" disabled={status === "sending"}>
+              {status === "sending" ? "Sending…" : "Send Message"}
+            </button>
+          </form>
+        )}
 
         <div className="contact-footer">
           <span>
