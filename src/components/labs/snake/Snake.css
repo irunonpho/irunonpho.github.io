@@ -149,19 +149,15 @@
 /* D-pad */
 .snake-dpad {
   display: grid;
-  grid-template-areas:
-    ". up ."
-    "left . right"
-    ". down .";
   grid-template-columns: 44px 44px 44px;
   grid-template-rows: 44px 44px 44px;
   gap: 0.3rem;
 }
 
-.snake-dpad-up    { grid-area: up; }
-.snake-dpad-left  { grid-area: left; }
-.snake-dpad-right { grid-area: right; }
-.snake-dpad-down  { grid-area: down; }
+.snake-dpad-up    { grid-column: 2; grid-row: 1; }
+.snake-dpad-left  { grid-column: 1; grid-row: 2; }
+.snake-dpad-right { grid-column: 3; grid-row: 2; }
+.snake-dpad-down  { grid-column: 2; grid-row: 3; }
 
 .snake-dpad-btn {
   width: 44px;
