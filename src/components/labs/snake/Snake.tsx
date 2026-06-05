@@ -193,7 +193,7 @@ export default function Snake() {
     const nextSnake: Pt[] = ate ? [head, ...snake] : [head, ...snake.slice(0, -1)];
 
     if (ate) {
-      const s = nextSnake.length - 3;
+      const s = score + 1;
       setScore(s);
       setBests(prev => s > (prev[difficulty]?.score ?? -1)
         ? { ...prev, [difficulty]: { score: s, timestamp: Date.now() } }
@@ -224,12 +224,14 @@ export default function Snake() {
     const ghostSelf = ghost.slice(1).some(([x, y]) => x === gx && y === gy);
     const ghostFood = food.some(([fx, fy]) => fx === gx && fy === gy);
     if (ghostSelf || ghostFood) {
-      const newScore = score * ghost.length;
-      setScore(newScore);
-      setBests(prev => newScore > (prev[difficulty]?.score ?? -1)
-        ? { ...prev, [difficulty]: { score: newScore, timestamp: Date.now() } }
-        : prev
-      );
+      setScore(prev => {
+        const newScore = prev * ghost.length;
+        setBests(b => newScore > (b[difficulty]?.score ?? -1)
+          ? { ...b, [difficulty]: { score: newScore, timestamp: Date.now() } }
+          : b
+        );
+        return newScore;
+      });
       setGhostAlive(false);
       setGhostFlash(true);
       ghostAcc.current = 0;
