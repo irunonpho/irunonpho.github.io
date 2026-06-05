@@ -53,7 +53,7 @@ export default function Contact() {
           Let's <span className="gradient-text">Connect</span>
         </h2>
         <p className="contact-subtext">
-          Have a project in mind or just want to chat? My inbox is always open.
+          Open to Staff engineering roles in AI infrastructure or challenging problems. Let's talk.
         </p>
 
         <a href={`mailto:${contact.email}`} className="contact-email-link">

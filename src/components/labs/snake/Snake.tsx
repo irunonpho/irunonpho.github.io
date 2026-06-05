@@ -368,10 +368,10 @@ export default function Snake() {
       </div>
 
       <div className="snake-dpad">
-        <button className="snake-dpad-btn snake-dpad-up"    onClick={() => { steer("U"); if (!dead) setRunning(true); }}>↑</button>
-        <button className="snake-dpad-btn snake-dpad-left"  onClick={() => { steer("L"); if (!dead) setRunning(true); }}>←</button>
-        <button className="snake-dpad-btn snake-dpad-right" onClick={() => { steer("R"); if (!dead) setRunning(true); }}>→</button>
-        <button className="snake-dpad-btn snake-dpad-down"  onClick={() => { steer("D"); if (!dead) setRunning(true); }}>↓</button>
+        <button className="snake-dpad-btn snake-dpad-up"    onPointerDown={() => { steer("U"); if (!dead) setRunning(true); }}>↑</button>
+        <button className="snake-dpad-btn snake-dpad-left"  onPointerDown={() => { steer("L"); if (!dead) setRunning(true); }}>←</button>
+        <button className="snake-dpad-btn snake-dpad-right" onPointerDown={() => { steer("R"); if (!dead) setRunning(true); }}>→</button>
+        <button className="snake-dpad-btn snake-dpad-down"  onPointerDown={() => { steer("D"); if (!dead) setRunning(true); }}>↓</button>
       </div>
 
       <div className="snake-footer">

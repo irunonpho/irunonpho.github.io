@@ -15,7 +15,15 @@
   border: 1px solid rgba(99, 102, 241, 0.2);
   border-radius: 12px;
   width: fit-content;
+  max-width: 100%;
   margin: 0 auto 2rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.lab-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .lab-tab {
@@ -28,6 +36,8 @@
   font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .lab-tab.active {
@@ -39,152 +49,4 @@
 .lab-tab:not(.active):hover {
   color: var(--accent);
   background: rgba(99, 102, 241, 0.1);
-}
-
-.gol-description {
-  color: var(--text-muted);
-  font-size: 1.05rem;
-  margin: 0 auto 2rem;
-  max-width: 480px;
-  line-height: 1.7;
-}
-
-/* Grid */
-.gol-grid-wrap {
-  display: flex;
-  justify-content: center;
-  margin-bottom: 1.75rem;
-}
-
-.gol-grid {
-  display: grid;
-  grid-template-columns: repeat(20, 22px);
-  grid-template-rows: repeat(20, 22px);
-  gap: 2px;
-  padding: 10px;
-  background: rgba(99, 102, 241, 0.05);
-  border: 1px solid rgba(99, 102, 241, 0.2);
-  border-radius: 14px;
-  width: fit-content;
-}
-
-.gol-cell {
-  width: 22px;
-  height: 22px;
-  border-radius: 3px;
-  background: rgba(99, 102, 241, 0.07);
-  border: none;
-  cursor: pointer;
-  transition: background 0.06s;
-  padding: 0;
-}
-
-.gol-cell:hover {
-  background: rgba(99, 102, 241, 0.3);
-}
-
-.gol-cell.alive {
-  background: linear-gradient(135deg, #6366f1, #a78bfa);
-  box-shadow: 0 0 3px rgba(99, 102, 241, 0.6);
-}
-
-.gol-cell.alive:hover {
-  background: linear-gradient(135deg, #818cf8, #c4b5fd);
-}
-
-/* Controls */
-.gol-controls {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-}
-
-.gol-gen {
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.gol-btns {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.gol-btn {
-  cursor: pointer;
-  min-width: 88px;
-  border: none;
-  font-size: 0.9rem;
-}
-
-.gol-btn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* Speed slider */
-.gol-speed {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  width: 100%;
-  max-width: 480px;
-  margin: 0 auto 1.5rem;
-}
-
-.gol-speed-label {
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.gol-slider {
-  width: 100%;
-  accent-color: var(--accent);
-  cursor: pointer;
-  height: 4px;
-}
-
-.gol-speed-ends {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.25);
-}
-
-/* Rules */
-.gol-rules {
-  font-size: 0.82rem;
-  color: rgba(255, 255, 255, 0.25);
-  max-width: 480px;
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-.gol-rules strong {
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Responsive */
-@media (max-width: 540px) {
-  .gol-grid {
-    grid-template-columns: repeat(20, 14px);
-    grid-template-rows: repeat(20, 14px);
-    gap: 1px;
-    padding: 6px;
-  }
-  .gol-cell {
-    width: 14px;
-    height: 14px;
-  }
 }

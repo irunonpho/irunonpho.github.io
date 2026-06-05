@@ -65,7 +65,6 @@
   position: relative;
 }
 
-/* trigger inherits .navbar-links a styles — only caret extras needed */
 .navbar-dropdown-trigger {
   display: inline-flex;
   align-items: center;
@@ -182,4 +181,140 @@
 .navbar-submenu li a:hover {
   background: rgba(99, 102, 241, 0.15);
   color: #fff;
+}
+
+/* ── Hamburger ─────────────────────────────────────────────── */
+.navbar-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  z-index: 101;
+}
+
+.navbar-hamburger:hover {
+  background: rgba(99, 102, 241, 0.1);
+}
+
+.navbar-hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--text-muted);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.2s ease;
+  transform-origin: center;
+}
+
+.navbar-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.navbar-hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.navbar-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile menu ───────────────────────────────────────────── */
+.navbar-mobile {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(7, 5, 20, 0.97);
+  backdrop-filter: blur(20px);
+  padding-top: 4.5rem;
+  overflow-y: auto;
+  transform: translateX(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.navbar-mobile.open {
+  transform: translateX(0);
+}
+
+.navbar-mobile-links {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 1.25rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-mobile-links > li > a {
+  display: block;
+  padding: 0.9rem 1rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 10px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navbar-mobile-links > li > a:hover,
+.navbar-mobile-links > li > a:active {
+  background: rgba(99, 102, 241, 0.1);
+  color: #fff;
+}
+
+.navbar-mobile-lab-group {
+  margin: 0.5rem 0;
+  border-top: 1px solid rgba(99, 102, 241, 0.12);
+  border-bottom: 1px solid rgba(99, 102, 241, 0.12);
+  padding: 0.5rem 0;
+}
+
+.navbar-mobile-group-label {
+  display: block;
+  padding: 0.35rem 1rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.navbar-mobile-lab-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-mobile-lab-links li a {
+  display: block;
+  padding: 0.75rem 1rem 0.75rem 1.75rem;
+  font-size: 1rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.navbar-mobile-lab-links li a:hover,
+.navbar-mobile-lab-links li a:active {
+  background: rgba(99, 102, 241, 0.1);
+  color: #fff;
+}
+
+/* ── Mobile breakpoint ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  .navbar {
+    padding: 1rem 1.25rem;
+  }
+
+  .navbar-links {
+    display: none;
+  }
+
+  .navbar-hamburger {
+    display: flex;
+  }
+
+  .navbar-mobile {
+    display: block;
+  }
 }

@@ -149,9 +149,9 @@
 /* D-pad */
 .snake-dpad {
   display: grid;
-  grid-template-columns: 44px 44px 44px;
-  grid-template-rows: 44px 44px 44px;
-  gap: 0.3rem;
+  grid-template-columns: repeat(3, 56px);
+  grid-template-rows: repeat(3, 56px);
+  gap: 0.35rem;
 }
 
 .snake-dpad-up    { grid-column: 2; grid-row: 1; }
@@ -160,20 +160,29 @@
 .snake-dpad-down  { grid-column: 2; grid-row: 3; }
 
 .snake-dpad-btn {
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
   border: 1px solid rgba(99, 102, 241, 0.3);
   background: rgba(99, 102, 241, 0.08);
   color: var(--text-muted);
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   cursor: pointer;
-  transition: background 0.15s, color 0.15s;
+  transition: background 0.1s, color 0.1s, transform 0.08s;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .snake-dpad-btn:hover {
   background: rgba(99, 102, 241, 0.2);
   color: #fff;
+}
+
+.snake-dpad-btn:active {
+  background: rgba(99, 102, 241, 0.4);
+  color: #fff;
+  transform: scale(0.92);
 }
 
 /* Footer controls */

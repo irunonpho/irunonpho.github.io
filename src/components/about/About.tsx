@@ -20,13 +20,17 @@ export default function About() {
                 <span className="detail-label">Email</span>
                 <a href={`mailto:${contact.email}`}>{contact.email}</a>
               </div>
-              {contact.phone && (
-                <div className="detail-item">
-                  <span className="detail-label">Phone</span>
-                  <span>{contact.phone}</span>
-                </div>
-              )}
             </div>
+            <a
+              href="/resume.pdf"
+              download
+              className="about-resume-btn"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 1v8M7 9l-3-3M7 9l3-3M1 12h12" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              Download Resume
+            </a>
           </div>
           <div className="about-skills">
             <h3 className="skills-heading">Tech Stack</h3>

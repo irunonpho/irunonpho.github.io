@@ -42,7 +42,7 @@ export default function Portfolio() {
     <section id="portfolio" className="portfolio section">
       <div className="section-inner">
         <h2 className="section-title">
-          My <span className="gradient-text">Work</span>
+          Work <span className="gradient-text">Portfolio</span>
         </h2>
 
         <div className="portfolio-carousel">

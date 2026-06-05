@@ -1,0 +1,96 @@
+.lab-desc {
+  margin-top: 2.5rem;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.lab-desc-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background: rgba(99, 102, 241, 0.06);
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.lab-desc-toggle:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: var(--accent);
+}
+
+.lab-desc-chevron {
+  display: inline-block;
+  font-size: 1.1rem;
+  transition: transform 0.2s;
+}
+
+.lab-desc-chevron.open {
+  transform: rotate(180deg);
+}
+
+.lab-desc-body {
+  padding: 1.25rem 1.5rem 1.5rem;
+  text-align: left;
+  color: var(--text-muted);
+  font-size: 0.92rem;
+  line-height: 1.75;
+}
+
+.lab-desc-body h1,
+.lab-desc-body h2,
+.lab-desc-body h3 {
+  color: var(--text);
+  margin: 1.25rem 0 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.lab-desc-body h1:first-child,
+.lab-desc-body h2:first-child,
+.lab-desc-body h3:first-child {
+  margin-top: 0;
+}
+
+.lab-desc-body p {
+  margin: 0 0 0.75rem;
+}
+
+.lab-desc-body p:last-child {
+  margin-bottom: 0;
+}
+
+.lab-desc-body ul,
+.lab-desc-body ol {
+  margin: 0 0 0.75rem;
+  padding-left: 1.4rem;
+}
+
+.lab-desc-body li {
+  margin-bottom: 0.3rem;
+}
+
+.lab-desc-body strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.lab-desc-body code {
+  font-family: monospace;
+  font-size: 0.85em;
+  background: rgba(99, 102, 241, 0.12);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+  color: #a78bfa;
+}
