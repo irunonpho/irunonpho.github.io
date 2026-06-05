@@ -1,10 +1,10 @@
-import ParticleBackground from "./components/ParticleBackground";
-import Navbar from "./components/Navbar";
-import Hero from "./components/Hero";
-import About from "./components/About";
-import Portfolio from "./components/Portfolio";
-import GameOfLife from "./components/GameOfLife";
-import Contact from "./components/Contact";
+import ParticleBackground from "./components/layout/ParticleBackground";
+import Navbar from "./components/layout/Navbar";
+import Hero from "./components/hero/Hero";
+import About from "./components/about/About";
+import Portfolio from "./components/portfolio/Portfolio";
+import Lab from "./components/labs/Lab";
+import Contact from "./components/contact/Contact";
 import "./App.css";
 
 export default function App() {
@@ -16,7 +16,7 @@ export default function App() {
         <Hero />
         <About />
         <Portfolio />
-        <GameOfLife />
+        <Lab />
         <Contact />
       </main>
     </div>

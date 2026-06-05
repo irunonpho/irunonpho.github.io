@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
-import { portfolio } from "../data/portfolio";
+import { portfolio } from "../../data/portfolio";
 import "./Portfolio.css";
 
 export default function Portfolio() {

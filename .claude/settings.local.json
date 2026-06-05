@@ -6,7 +6,14 @@
       "Bash(npx playwright *)",
       "Bash(node -e ' *)",
       "PowerShell(Get-Process -Name \"node\" -ErrorAction SilentlyContinue)",
-      "PowerShell(Stop-Process -Force)"
+      "PowerShell(Stop-Process -Force)",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\About.tsx\")",
+      "Bash(Select-String \"^import\")",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\Hero.tsx\")",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\Contact.tsx\")",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\ConnectFour.tsx\")",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\Snake.tsx\")",
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\ParticleBackground.tsx\")"
     ]
   }
 }
