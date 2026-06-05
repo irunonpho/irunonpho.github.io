@@ -153,10 +153,26 @@
   animation: boop-pulse 0.7s ease-in-out infinite alternate;
 }
 
+.boop-cell.hovered-triad {
+  cursor: pointer;
+  background: rgba(251, 191, 36, 0.3);
+  border-color: rgba(251, 191, 36, 0.9);
+  box-shadow: 0 0 14px rgba(251, 191, 36, 0.45);
+  animation: none;
+  transform: scale(1.06);
+}
+
 .boop-cell.eligible-upgrade {
   cursor: pointer;
   background: rgba(16, 185, 129, 0.15);
   border-color: rgba(16, 185, 129, 0.55);
+  animation: boop-pulse 0.7s ease-in-out infinite alternate;
+}
+
+.boop-cell.eligible-retrieve {
+  cursor: pointer;
+  background: rgba(99, 102, 241, 0.15);
+  border-color: rgba(99, 102, 241, 0.55);
   animation: boop-pulse 0.7s ease-in-out infinite alternate;
 }
 

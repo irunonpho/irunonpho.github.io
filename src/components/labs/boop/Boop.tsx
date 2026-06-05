@@ -86,10 +86,13 @@ function findTriads(board: Board, player: PlayerID, type: PieceType): Triad[] {
   return out;
 }
 
-function checkWinner(board: Board): { winner: PlayerID; triad: Triad } | null {
+function checkWinner(board: Board): { winner: PlayerID; triad: Triad | null } | null {
   for (const p of [1, 2] as PlayerID[]) {
     const t = findTriads(board, p, "cat");
     if (t.length) return { winner: p, triad: t[0] };
+  }
+  for (const p of [1, 2] as PlayerID[]) {
+    if (countPieces(board, p, "cat") >= 8) return { winner: p, triad: null };
   }
   return null;
 }
@@ -118,7 +121,7 @@ function findGradSets(board: Board, player: PlayerID): { eligibleCells: Set<stri
     const kittens = triad.filter(([r, c]) => board[r][c]?.type === "kitten");
     if (kittens.length === 0) continue; // pure-cat triad → win, not graduation
     mixedTriads.push(triad);
-    for (const [r, c] of kittens) eligibleCells.add(`${r},${c}`);
+    for (const [r, c] of triad) eligibleCells.add(`${r},${c}`);
   }
   return { eligibleCells, triads: mixedTriads };
 }
@@ -143,11 +146,12 @@ export default function Boop() {
   const [phase,         setPhase]         = useState<Phase>("playing");
   const [winner,        setWinner]        = useState<PlayerID | null>(null);
   const [winTriad,      setWinTriad]      = useState<Triad | null>(null);
-  const [boopedCells,   setBoopedCells]   = useState<Set<string>>(new Set());
-  const [gradCells,     setGradCells]     = useState<Set<string>>(new Set());
-  const [gradQueue,     setGradQueue]     = useState<GradTask[]>([]);
-  const [pendingBoard,  setPendingBoard]  = useState<Board | null>(null);
-  const [pendingRes,    setPendingRes]    = useState<[Reserve, Reserve] | null>(null);
+  const [boopedCells,     setBoopedCells]     = useState<Set<string>>(new Set());
+  const [gradCells,       setGradCells]       = useState<Set<string>>(new Set());
+  const [gradQueue,       setGradQueue]       = useState<GradTask[]>([]);
+  const [pendingBoard,    setPendingBoard]    = useState<Board | null>(null);
+  const [pendingRes,      setPendingRes]      = useState<[Reserve, Reserve] | null>(null);
+  const [hoveredTriadIdx, setHoveredTriadIdx] = useState<number | null>(null);
 
   const pIdx       = currentPlayer - 1;
   const reserve    = reserves[pIdx];
@@ -165,8 +169,8 @@ export default function Boop() {
     setPieceType(nr.kittens > 0 ? "kitten" : "cat");
 
     if (nr.kittens === 0 && nr.cats === 0) {
-      const kOB = countPieces(b, next, "kitten");
-      if (kOB === 0) {
+      const piecesOB = countPieces(b, next, "kitten") + countPieces(b, next, "cat");
+      if (piecesOB === 0) {
         setWinner(next);
         setWinTriad(null);
         setPhase("game_over");
@@ -197,8 +201,8 @@ export default function Boop() {
 
     const cpr = rs[cp - 1];
     if (cpr.kittens === 0 && cpr.cats === 0) {
-      const kOB = countPieces(b, cp, "kitten");
-      if (kOB === 0) {
+      const piecesOB = countPieces(b, cp, "kitten") + countPieces(b, cp, "cat");
+      if (piecesOB === 0) {
         setWinner(cp);
         setWinTriad(null);
         setPhase("game_over");
@@ -259,20 +263,14 @@ export default function Boop() {
     const clearedKeys = new Set(matchedTriad.map(([tr, tc]) => `${tr},${tc}`));
 
     for (const [tr, tc] of matchedTriad) {
-      const cellKey = `${tr},${tc}`;
       const piece = b[tr][tc];
       if (!piece || piece.owner !== currentGradTask.player) continue;
       b[tr][tc] = null;
-      if (piece.type === "cat") {
-        rs[pi].cats++;                          // cat returns to reserve
-      } else if (cellKey === key) {
-        rs[pi].cats++;                          // chosen kitten graduates
-      } else {
-        rs[pi].kittens++;                       // other kittens return
-      }
+      rs[pi].cats++;                            // all pieces in the triad graduate
     }
 
     setGradCells(clearedKeys);
+    setHoveredTriadIdx(null);
     const remaining = gradQueue.slice(1);
     setPendingBoard(b);
     setPendingRes(rs);
@@ -283,11 +281,12 @@ export default function Boop() {
 
   const handleUpgradeChoice = (r: number, c: number) => {
     const cell = board[r][c];
-    if (!cell || cell.owner !== currentPlayer || cell.type !== "kitten") return;
+    if (!cell || cell.owner !== currentPlayer) return;
 
     const b = board.map(row => [...row]);
     b[r][c] = null;
     const rs: [Reserve, Reserve] = [{ ...reserves[0] }, { ...reserves[1] }];
+    // Kittens upgrade to cats; cats are retrieved as-is — both add a cat to reserve
     rs[currentPlayer - 1].cats++;
     setBoard(b);
     setReserves(rs);
@@ -316,19 +315,23 @@ export default function Boop() {
     setPhase("playing"); setWinner(null); setWinTriad(null);
     setBoopedCells(new Set()); setGradCells(new Set());
     setGradQueue([]); setPendingBoard(null); setPendingRes(null);
+    setHoveredTriadIdx(null);
   };
 
-  const winSet      = new Set(winTriad?.map(([r, c]) => `${r},${c}`) ?? []);
+  const winSet       = new Set(winTriad?.map(([r, c]) => `${r},${c}`) ?? []);
   const gradEligible = phase === "awaiting_graduation" && currentGradTask
     ? currentGradTask.eligibleCells : new Set<string>();
+  const hoveredTriadCells = phase === "awaiting_graduation" && currentGradTask && hoveredTriadIdx !== null
+    ? new Set(currentGradTask.triads[hoveredTriadIdx]?.map(([r, c]) => `${r},${c}`) ?? [])
+    : new Set<string>();
 
   const badgePlayer: PlayerID = phase === "awaiting_graduation"
     ? (currentGradTask?.player ?? currentPlayer) : currentPlayer;
 
   const statusMsg = () => {
     if (phase === "game_over")          return `Player ${winner} wins!`;
-    if (phase === "awaiting_graduation") return `Player ${currentGradTask?.player} — choose a kitten to graduate`;
-    if (phase === "awaiting_upgrade")   return `Player ${currentPlayer} — select a kitten to upgrade in place`;
+    if (phase === "awaiting_graduation") return `Player ${currentGradTask?.player} — choose a triad to graduate`;
+    if (phase === "awaiting_upgrade")   return `Player ${currentPlayer} — upgrade a kitten or retrieve a cat`;
     if (!hasKittens && !hasCats)        return `Player ${currentPlayer} — no pieces!`;
     return `Player ${currentPlayer} — place a ${effective}`;
   };
@@ -383,21 +386,35 @@ export default function Boop() {
             {activeBoard.map((row, r) =>
               row.map((cell, c) => {
                 const key = `${r},${c}`;
-                const isUpgradeEligible = phase === "awaiting_upgrade"
+                const isUpgradeKitten = phase === "awaiting_upgrade"
                   && cell?.owner === currentPlayer && cell.type === "kitten";
+                const isUpgradeCat = phase === "awaiting_upgrade"
+                  && cell?.owner === currentPlayer && cell.type === "cat";
                 return (
                   <div
                     key={key}
                     className={[
                       "boop-cell",
                       !cell && phase === "playing" && (hasKittens || hasCats) ? "empty-hover" : "",
-                      gradEligible.has(key)  ? "eligible-grad"    : "",
-                      isUpgradeEligible      ? "eligible-upgrade"  : "",
-                      winSet.has(key)        ? "win"               : "",
-                      gradCells.has(key)     ? "grad"              : "",
-                      boopedCells.has(key)   ? "booped"            : "",
+                      gradEligible.has(key)      ? "eligible-grad"    : "",
+                      hoveredTriadCells.has(key) ? "hovered-triad"    : "",
+                      isUpgradeKitten            ? "eligible-upgrade"  : "",
+                      isUpgradeCat               ? "eligible-retrieve" : "",
+                      winSet.has(key)            ? "win"               : "",
+                      gradCells.has(key)         ? "grad"              : "",
+                      boopedCells.has(key)       ? "booped"            : "",
                     ].filter(Boolean).join(" ")}
                     onClick={() => handleCellClick(r, c)}
+                    onMouseEnter={() => {
+                      if (phase !== "awaiting_graduation" || !currentGradTask) return;
+                      const idx = currentGradTask.triads.findIndex(t =>
+                        t.some(([tr, tc]) => tr === r && tc === c)
+                      );
+                      setHoveredTriadIdx(idx >= 0 ? idx : null);
+                    }}
+                    onMouseLeave={() => {
+                      if (phase === "awaiting_graduation") setHoveredTriadIdx(null);
+                    }}
                   >
                     {cell && (
                       <img
