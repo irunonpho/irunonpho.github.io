@@ -118,7 +118,24 @@ function minimax(
   return [bestCol, best];
 }
 
-const getBestMove = (board: Board, depth: number) => minimax(board, depth, -Infinity, Infinity, true)[0];
+// Noise applied to each candidate score before selecting — higher noise = more random play.
+// Wins/blocks (score ~100k) are always forced regardless of noise.
+const DIFFICULTY_NOISE: Record<number, number> = { 2: 300, 3: 60, 4: 12, 5: 0 };
+
+function getBestMove(board: Board, depth: number): number {
+  const noise = DIFFICULTY_NOISE[depth] ?? 0;
+  const cols = validCols(board);
+  cols.sort((a, b) => Math.abs(a - 3) - Math.abs(b - 3));
+
+  let best = -Infinity;
+  let bestCol = cols[0];
+  for (const col of cols) {
+    const [, score] = minimax(drop(board, col, 2)!, depth - 1, -Infinity, Infinity, false);
+    const noisedScore = score + (Math.random() * 2 - 1) * noise;
+    if (noisedScore > best) { best = noisedScore; bestCol = col; }
+  }
+  return bestCol;
+}
 
 // ── Component ────────────────────────────────────────────────────────────────
 
