@@ -1,6 +1,6 @@
 import type { ReactElement } from "react";
 import { useState } from "react";
-import { contact } from "../data/contact";
+import { contact } from "../../data/contact";
 import "./Contact.css";
 
 // Sign up at https://formspree.io and replace with your form ID

@@ -1,4 +1,4 @@
-import { contact } from "../data/contact";
+import { contact } from "../../data/contact";
 import "./About.css";
 
 export default function About() {

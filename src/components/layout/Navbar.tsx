@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { contact } from "../data/contact";
+import { contact } from "../../data/contact";
 import "./Navbar.css";
 
 const linksBefore = [
@@ -91,6 +91,11 @@ export default function Navbar() {
             {/* Snake — plain item */}
             <li>
               <a href="#lab-snake" onClick={e => navToLab(e, "lab-snake")}>Snake</a>
+            </li>
+
+            {/* Boop — plain item */}
+            <li>
+              <a href="#lab-boop" onClick={e => navToLab(e, "lab-boop")}>Boop</a>
             </li>
           </ul>
         </li>
