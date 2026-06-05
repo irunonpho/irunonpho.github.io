@@ -13,7 +13,14 @@
       "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\Contact.tsx\")",
       "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\ConnectFour.tsx\")",
       "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\Snake.tsx\")",
-      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\ParticleBackground.tsx\")"
+      "Bash(Get-Content \"c:\\\\workspace\\\\personal-website\\\\src\\\\components\\\\ParticleBackground.tsx\")",
+      "Bash(Get-ChildItem -Path \"c:\\\\workspace\\\\personal-website\\\\src\" -Recurse -Directory)",
+      "Bash(Select-Object FullName)",
+      "Bash(Get-ChildItem -Recurse -Name)",
+      "Bash(grep -E \"\\\\.\\(tsx?|css\\)$\")",
+      "Bash(npx tsc *)",
+      "Bash(Get-ChildItem c:\\\\workspace\\\\personal-website\\\\public -ErrorAction SilentlyContinue)",
+      "Bash(Get-ChildItem c:\\\\workspace\\\\personal-website\\\\src\\\\assets -ErrorAction SilentlyContinue)"
     ]
   }
 }

@@ -24,6 +24,16 @@ main {
   letter-spacing: -0.02em;
 }
 
+@media (max-width: 640px) {
+  .section {
+    padding: 4rem 1.25rem;
+  }
+
+  .section-title {
+    margin: 0 0 2rem;
+  }
+}
+
 .gradient-text {
   background: linear-gradient(135deg, var(--accent), #a78bfa);
   -webkit-background-clip: text;
