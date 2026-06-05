@@ -7,7 +7,7 @@ const INIT_POISON = 1;
 const INIT_FOOD   = 1;
 const GHOST_RESPAWN_MS = 10_000;
 const GHOST_FLASH_MS   = 1_500;
-const GHOST_SPEED      = 0.8; // fraction of player tick rate
+const GHOST_SPEED      = 0.6; // fraction of player tick rate
 
 type Dir = "U" | "D" | "L" | "R";
 type Pt  = [number, number];
@@ -166,7 +166,8 @@ export default function Snake() {
 
   const latest = useRef({ snake, food, buffer, dead, difficulty, ghost, ghostDir, ghostAlive, poison, score });
   latest.current = { snake, food, buffer, dead, difficulty, ghost, ghostDir, ghostAlive, poison, score };
-  const ghostAcc = useRef(0);
+  const ghostAcc   = useRef(0);
+  const ghostSpeed = useRef(GHOST_SPEED);
 
   const tick = useCallback(() => {
     const { snake, food, buffer, dead, difficulty, ghost, ghostDir, ghostAlive, poison, score } = latest.current;
@@ -210,7 +211,7 @@ export default function Snake() {
     // ── Ghost move ────────────────────────────────────────────────────────────
     if (!ghostAlive) return;
 
-    ghostAcc.current += GHOST_SPEED;
+    ghostAcc.current += ghostSpeed.current;
     if (ghostAcc.current < 1) return;
     ghostAcc.current -= 1;
 
@@ -224,6 +225,7 @@ export default function Snake() {
     const ghostSelf = ghost.slice(1).some(([x, y]) => x === gx && y === gy);
     const ghostFood = food.some(([fx, fy]) => fx === gx && fy === gy);
     if (ghostSelf || ghostFood) {
+      setFood(f => f.slice(0, Math.floor(f.length / 2)));
       setScore(prev => {
         const newScore = prev * ghost.length;
         setBests(b => newScore > (b[difficulty]?.score ?? -1)
@@ -232,6 +234,7 @@ export default function Snake() {
         );
         return newScore;
       });
+      ghostSpeed.current += 0.1;
       setGhostAlive(false);
       setGhostFlash(true);
       ghostAcc.current = 0;
@@ -292,6 +295,7 @@ export default function Snake() {
     setDead(false); setScore(0);
     setGhostAlive(true); setGhostFlash(false);
     ghostAcc.current = 0;
+    ghostSpeed.current = GHOST_SPEED;
   };
 
   // ── Render ──────────────────────────────────────────────────────────────────
